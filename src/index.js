@@ -1,17 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+// 1 - Importamos createStore
+// 2 - importamos el rootReducer que combina todos nuestros reducers ( == a piezas de state)
+// 3 - importamos Provider
+// 4 - Definimos el store y se lo pasamos a Provider
+// 5 - Y si queremos utilizar las dev tools extension de redux le pasamos:
+import { createStore } from 'redux';
+import rootReducer from './reducers/index';
+import { Provider } from 'react-redux';
+
+const store = createStore(
+	rootReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
+);
